@@ -1,19 +1,18 @@
-import { cookies } from "next/headers";
-export async function getPositions() {
-  const cookieStore = cookies();
-  const jwtToken = cookieStore.get("jwtToken");
-  if (!jwtToken) {
-    throw new Error("JWT token not found in cookie");
-  }
-
+import { PortfolioSectors } from "../app/positions/position.model";
+export async function getPositions(jwt: string | undefined) {
   let result = null,
     error = null;
+
+  if (!jwt) {
+    throw new Error("Session JWT token not found.");
+  }
+
   try {
     result = await fetch(`${process.env.POSITIONS_SERVICE_URL!}/positions/sectors`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Cookie: `Authentication=${jwtToken.value}`,
+        Cookie: `Authentication=${jwt}`,
       },
       credentials: "include",
     });
@@ -21,10 +20,10 @@ export async function getPositions() {
       throw new Error(`Failed to fetch positions: ${result.statusText}`);
     }
 
-    const data = await result.json();
+    const data: PortfolioSectors = await result.json();
     return { result: data, error: null };
   } catch (e) {
     error = e;
-    return { result: null, error: error };
+    return { result: {}, error: error };
   }
 }

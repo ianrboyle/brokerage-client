@@ -15,10 +15,6 @@ export async function signUp(signUpData: SignUpData) {
       throw new Error(`Failed to sign up: ${result.status}`);
     }
 
-    // If response status is 201 Created, extract JWT from response headers and save it in a cookie
-
-    // Save JWT token in a cookie
-
     const data = await result.json();
 
     return data;

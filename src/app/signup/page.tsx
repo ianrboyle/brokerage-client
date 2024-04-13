@@ -4,6 +4,7 @@ import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Bolt from "@mui/icons-material/Bolt";
+import paths from "../../paths";
 // import SignInWithGoogle from './components/SignInWithGoogle';
 // import SignInWithEmailPassword from './components/SignInWithEmailPassword';
 
@@ -44,7 +45,7 @@ export default function SignUpPage() {
       document.cookie = `jwtToken=${jwtToken}; path=/;`;
       // getJwtToken();
 
-      router.push("/");
+      router.push(paths.home());
     } catch (error) {
       // ErrorHandlers.handleError(error);
       console.error(error);

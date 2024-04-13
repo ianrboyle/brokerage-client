@@ -5,17 +5,17 @@ import React from "react";
 
 const SignInButton = () => {
   const { data: session } = useSession();
-  console.log(session);
+
   if (session && session.user)
     return (
-      <div>
+      <div className="space-x-4 text-xl">
         <p>Welcome {session.user.email}</p>
         <Link href={"/api/auth/signout"}>Sign Out</Link>
       </div>
     );
 
   return (
-    <div>
+    <div className="space-x-4 text-xl">
       <Link href={"/signup"}>Sign Up</Link>
       <Link href={"/api/auth/signin"}>Sign In</Link>
     </div>
