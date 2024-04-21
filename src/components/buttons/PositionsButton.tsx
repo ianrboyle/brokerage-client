@@ -8,7 +8,7 @@ const PositionsButton = () => {
   if (session && session.user)
     return (
       <div className="space-x-4 text-xl">
-        <Link href="/positions">Positions</Link>
+        <Link href="/sectors">Sector Allocation</Link>
         <Link href="/positions/new">Create New Position</Link>
       </div>
     );

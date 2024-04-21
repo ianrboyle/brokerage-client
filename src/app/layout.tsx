@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/header";
 import NavBar from "@/components/NavBar";
 import { Providers } from "./providers/Providers";
+import { Provider } from "react-redux";
+import { store } from "../store";
 
 const inter = Inter({ subsets: ["latin"] });
 

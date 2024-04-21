@@ -13,7 +13,6 @@ export async function signout() {
     }
   } catch (e) {
     error = e;
-    console.log("HELLO:", { result: null, error: error });
     return { result: null, error: error };
   }
 }

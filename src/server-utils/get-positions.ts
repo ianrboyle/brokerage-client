@@ -1,4 +1,4 @@
-import { PortfolioSectors } from "../app/positions/position.model";
+import { PortfolioSectors } from "../app/sectors/position.model";
 export async function getPositions(jwt: string | undefined) {
   let result = null,
     error = null;

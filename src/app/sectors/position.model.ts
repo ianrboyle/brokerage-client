@@ -7,6 +7,10 @@ export type PortfolioSector = {
   currentValue: number;
   totalCostBasis: number;
   percentGain: number;
+  percentOfAccount: number;
+  sectorName: string;
+  sectorId: number;
+  id?: number;
 };
 
 export type PortfolioIndustry = {
@@ -14,6 +18,10 @@ export type PortfolioIndustry = {
   totalCostBasis: number;
   positions: { [key: string]: PortfolioPosition };
   percentGain: number;
+  industryName: string;
+  percentOfAccount: number;
+  id?: number;
+  industryId: number;
 };
 
 export type PositionGroup = {
@@ -26,6 +34,7 @@ export type PortfolioPosition = {
   totalCostBasis: number;
   percentGain: number;
   quantity: number;
+  id?: number;
 };
 
 export enum GroupType {

@@ -1,6 +1,6 @@
 import Link from "next/link";
-import SignInButton from "./SignInButton";
-import PositionsButton from "./PositionsButton";
+import SignInButton from "./buttons/SignInButton";
+import PositionsButton from "./buttons/PositionsButton";
 import paths from "../paths";
 
 const Header = () => {

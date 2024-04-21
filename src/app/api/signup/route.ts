@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SignUpData } from "../../signup/page";
-import { signUp } from "../../../server-utils/signup-user";
+import { signUp } from "../../../server-utils/signup";
 
 export async function POST(request: NextRequest) {
   try {
