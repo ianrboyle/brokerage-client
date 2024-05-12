@@ -15,7 +15,6 @@ interface IndustryTableProps {
 }
 
 export const IndustryTable: React.FC<IndustryTableProps> = ({ industries }) => {
-  console.log("INDUSTRIES: ", industries);
   return (
     <div style={{ height: 400, width: "100%" }}>
       <DataGrid

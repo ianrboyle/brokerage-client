@@ -12,6 +12,7 @@ const Industries = async () => {
   const pieChartLabels: string[] = [];
   const currentValues: number[] = [];
   const percentOfAccount: number[] = [];
+  const industryIds: number[] = [];
   const industries: PortfolioIndustry[] = [];
   const sectors = response.result as PortfolioSectors;
   for (const sectoerName in sectors) {
@@ -21,6 +22,7 @@ const Industries = async () => {
       const industry = sectorIndustries[industryName];
 
       industry.id = industry.industryId;
+      industryIds.push(industry.industryId);
       industries.push(industry);
 
       pieChartLabels.push(industryName);
@@ -40,6 +42,7 @@ const Industries = async () => {
                 labels={pieChartLabels}
                 id="chart1"
                 chartType="industries"
+                chartTypeIds={industryIds}
               />
             ) : null}{" "}
           </Grid>
@@ -51,6 +54,7 @@ const Industries = async () => {
                 labels={pieChartLabels}
                 id="chart2"
                 chartType="industries"
+                chartTypeIds={industryIds}
               />
             ) : null}{" "}
           </Grid>

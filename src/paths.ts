@@ -13,6 +13,9 @@ const paths = {
   positionShow(positionId: string) {
     return `/positions/${positionId}`;
   },
+  createIndustry() {
+    return `/createIndustry`;
+  },
 };
 
 export default paths;

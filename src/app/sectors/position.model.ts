@@ -35,6 +35,7 @@ export type PortfolioPosition = {
   percentGain: number;
   quantity: number;
   id?: number;
+  positionId: number;
 };
 
 export enum GroupType {

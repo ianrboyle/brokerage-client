@@ -6,3 +6,4 @@ TODO:
 - improve error handling
 - improve layout
 - combine all the tables components into one component
+- figure out why get industries by id does not work with auth - auth turned off in backend for now

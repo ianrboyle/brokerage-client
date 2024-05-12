@@ -5,11 +5,14 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import { getPositions } from "../../server-utils/index";
 import { Grid } from "@mui/material";
 import { SectorsTable } from "../../components/SectorsTable";
+import Spinner from "../../components/progress/Spinner";
+import SkeletonAnimation from "../../components/progress/Skeleton";
 
-const Positions = async () => {
+const Sectors = async () => {
   const percentOfAccount: number[] = [];
   const currentValues: number[] = [];
   const pieChartLabels: string[] = [];
+  const sectorIds: number[] = [];
   const session = await getServerSession(authOptions);
 
   const response = await getPositions(session?.jwt);
@@ -23,7 +26,7 @@ const Positions = async () => {
       sector.id = sector.sectorId;
       sectorData.push(sector);
       pieChartLabels.push(sectorName);
-
+      sectorIds.push(sector.sectorId);
       percentOfAccount.push(sector.percentOfAccount);
       currentValues.push(sector.currentValue);
     }
@@ -43,6 +46,7 @@ const Positions = async () => {
                 labels={pieChartLabels}
                 id="chart1"
                 chartType="sectors"
+                chartTypeIds={sectorIds}
               />
             ) : null}{" "}
           </Grid>
@@ -56,6 +60,7 @@ const Positions = async () => {
                 labels={pieChartLabels}
                 id="chart2"
                 chartType="sectors"
+                chartTypeIds={sectorIds}
               />
             ) : null}
           </Grid>
@@ -67,7 +72,7 @@ const Positions = async () => {
         </Grid>
       </div>
     );
-  return <div>No Positions</div>;
+  return <div>No Sectors</div>;
 };
 
-export default Positions;
+export default Sectors;

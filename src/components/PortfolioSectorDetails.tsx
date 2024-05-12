@@ -5,6 +5,8 @@ import { PortfolioIndustry, PortfolioSectors } from "../app/sectors/position.mod
 import { Grid } from "@mui/material";
 import { usePathname } from "next/navigation";
 import PieChart from "./piechart";
+import { IndustryTable } from "./IndustryTable";
+import Spinner from "./progress/Spinner";
 
 interface PortfolioSectorDetailsProps {
   sectorData: PortfolioSectors;
@@ -16,6 +18,7 @@ const PortfolioSectorDetails: React.FC<PortfolioSectorDetailsProps> = ({ sectorD
   const sectorName = lastPathSegment ? decodeURIComponent(lastPathSegment) : "";
   const currentValues: number[] = [];
   const percentOfAccount: number[] = [];
+  const industryIds: number[] = [];
   const pieChartLabels: string[] = [];
 
   const sector = sectorData[sectorName];
@@ -23,10 +26,12 @@ const PortfolioSectorDetails: React.FC<PortfolioSectorDetailsProps> = ({ sectorD
   const industries: PortfolioIndustry[] = [];
   for (const industryName in industriesObject) {
     const ind = industriesObject[industryName];
+    ind.id = ind.industryId;
     industries.push(ind);
     pieChartLabels.push(industryName);
     currentValues.push(ind.currentValue);
     percentOfAccount.push(ind.percentOfAccount);
+    industryIds.push(ind.industryId);
   }
 
   // Now you have the industry data, you can use it as needed
@@ -35,12 +40,7 @@ const PortfolioSectorDetails: React.FC<PortfolioSectorDetailsProps> = ({ sectorD
       <div style={{ marginTop: "100px", textAlign: "center" }}>
         <Grid container spacing={3}>
           <Grid item xs={6} sm={6} md={6} lg={6}>
-            <h1>{sectorName}</h1>
-            <ul>
-              {industries.map((industry, index) => (
-                <li key={index}>{industry.industryName}</li>
-              ))}
-            </ul>
+            <IndustryTable industries={industries} />
           </Grid>
           <Grid item xs={6} sm={6} md={6} lg={6}>
             {" "}
@@ -52,6 +52,7 @@ const PortfolioSectorDetails: React.FC<PortfolioSectorDetailsProps> = ({ sectorD
                 labels={pieChartLabels}
                 id="chart1"
                 chartType="industries"
+                chartTypeIds={industryIds}
               />
             ) : null}{" "}
           </Grid>
@@ -65,12 +66,17 @@ const PortfolioSectorDetails: React.FC<PortfolioSectorDetailsProps> = ({ sectorD
                 labels={pieChartLabels}
                 id="chart2"
                 chartType="industries"
+                chartTypeIds={industryIds}
               />
             ) : null}{" "}
           </Grid>
         </Grid>
       </div>
     );
+  if (!industries || industries.length == 0)
+    <div style={{ marginTop: "200px" }}>
+      <Spinner />
+    </div>;
 };
 
 export default PortfolioSectorDetails;

@@ -1,5 +1,11 @@
+import { UploadCsvComponent } from "../components/UploadCsvComponent";
+
 const Home = () => {
-  return <div>Home Page</div>;
+  return (
+    <div style={{ marginTop: "100px", textAlign: "center" }}>
+      <UploadCsvComponent />
+    </div>
+  );
 };
 
 export default Home;

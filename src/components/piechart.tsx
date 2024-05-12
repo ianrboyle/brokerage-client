@@ -9,9 +9,10 @@ interface PieChartProps {
   labels: string[];
   id: string;
   chartType: string;
+  chartTypeIds: number[];
 }
 
-function PieChart({ chartName, data, labels, id, chartType }: PieChartProps) {
+function PieChart({ chartName, data, labels, id, chartType, chartTypeIds }: PieChartProps) {
   const chartRef = useRef<Chart | null>(null);
   const router = useRouter();
   useEffect(() => {
@@ -41,12 +42,16 @@ function PieChart({ chartName, data, labels, id, chartType }: PieChartProps) {
         onClick: (event, elements) => {
           // Check if a slice was clicked
           if (elements && elements.length > 0) {
-            console.log(chartType);
             const index = elements[0].index;
             const label = labels[index];
             const value = data[index];
+            const id = chartTypeIds[index];
+
             if (chartType != "positions") {
               router.push(`/${chartType}/${label}`);
+            }
+            if (chartType == "positions") {
+              router.push(`/${chartType}/${id}`);
             }
           }
         },

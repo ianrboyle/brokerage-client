@@ -17,7 +17,7 @@ const PortfolioIndustryDetails: React.FC<PortfolioIndustryDetailsProps> = ({ sec
   const lastPathSegment = pathName.split("/").pop();
   const industryName = lastPathSegment ? decodeURIComponent(lastPathSegment) : ""; // Access the industryName parameter from the URL
   const currentValues: number[] = [];
-  const percentOfAccount: number[] = [];
+  const positionIds: number[] = [];
   const pieChartLabels: string[] = [];
 
   const industry = sectorData[industryName];
@@ -27,13 +27,14 @@ const PortfolioIndustryDetails: React.FC<PortfolioIndustryDetailsProps> = ({ sec
     for (const industryKey in sector.industries) {
       if (industryKey === industryName) {
         const ind = sector.industries[industryKey];
-        let index = 0;
+
         for (const positionName in ind.positions) {
           const position = ind.positions[positionName];
-          position.id = index;
-          index += 1;
+          position.id = position.positionId;
+
           positions.push(position);
           currentValues.push(position.currentValue);
+          positionIds.push(position.positionId);
           pieChartLabels.push(positionName);
         }
       }
@@ -59,6 +60,7 @@ const PortfolioIndustryDetails: React.FC<PortfolioIndustryDetailsProps> = ({ sec
                 labels={pieChartLabels}
                 id="chart1"
                 chartType="positions"
+                chartTypeIds={positionIds}
               />
             ) : null}{" "}
           </Grid>
