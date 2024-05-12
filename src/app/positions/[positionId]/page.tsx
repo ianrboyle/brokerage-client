@@ -10,7 +10,6 @@ const fetchData = async (context: { params: { positionId: string } }) => {
 };
 
 const PositionPage = async (context: { params: { positionId: string } }) => {
-  const session = await getServerSession();
   const positionId = await fetchData(context);
   const response = await getPositionById(positionId);
   const position = response.result as Position;

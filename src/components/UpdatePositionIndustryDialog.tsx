@@ -52,6 +52,11 @@ export const UpdatePositionIndustryDialog: React.FC<UpdatePositionIndustryDialog
         method: "PATCH",
         body: formData,
       });
+      if (response.ok) {
+        window.location.reload();
+      } else {
+        console.error("Failed to update data");
+      }
     }
   };
 
@@ -75,6 +80,7 @@ export const UpdatePositionIndustryDialog: React.FC<UpdatePositionIndustryDialog
         Update Position Sector and Industry
       </Button>
       <Dialog
+        fullWidth
         open={open}
         onClose={handleClose}
         PaperProps={{
