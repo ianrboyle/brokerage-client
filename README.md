@@ -11,3 +11,5 @@ TODO:
 - combine all the tables components into one component
 - createNewPositionLink takes you to Position Card page
   - need pop modal or something for this
+- Log user out on front end
+  - check for session data. suggest relogin if no session data
