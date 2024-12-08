@@ -1,9 +1,9 @@
-import { Grid, Paper, styled } from "@mui/material";
+import { Grid } from "@mui/material";
 import { PositionCard } from "../../../components/PositionCard";
 import { getPositionById } from "../../../server-utils/get-positions-by-id";
 import { getSectors } from "../../../server-utils/get-sectors";
 import { Sector } from "../../../lib/models/sector.model";
-import { getServerSession } from "next-auth";
+import { Position } from "../../../lib/models/position.model";
 
 const fetchData = async (context: { params: { positionId: string } }) => {
   return context.params.positionId;

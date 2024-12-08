@@ -5,12 +5,10 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import SectorSelectDropdown from "./SectorSelectDropdown";
 import { Sector } from "../lib/models/sector.model";
 import { useState, useEffect } from "react";
-import { getIndustriesBySectorId } from "../server-utils/get-industries-by-sector-id";
 import { Industry } from "../lib/models/industry.model";
 import IndustrySelectDropdown from "./IndustrySelectDropdown";
 import { useSession } from "next-auth/react";
@@ -19,13 +17,19 @@ import { UpdatePositionIndustry } from "../lib/models/update-position-industry.m
 interface UpdatePositionIndustryDialogProps {
   sectors: Sector[];
   positionId: number;
+  onUpdateIndustryDetails: (sectorName: string, industryName: string, sectorId: number, industryId: number) => void;
 }
-export const UpdatePositionIndustryDialog: React.FC<UpdatePositionIndustryDialogProps> = ({ sectors, positionId }) => {
-  const { data: session } = useSession();
+export const UpdatePositionIndustryDialog: React.FC<UpdatePositionIndustryDialogProps> = ({
+  sectors,
+  positionId,
+  onUpdateIndustryDetails,
+}) => {
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
   const [sector, setSector] = useState<Sector | null>(null);
   const [industries, setIndustries] = useState<Industry[]>([]);
   const [industry, setIndustry] = useState<Industry | null>(null);
+  const [loading, setLoading] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -41,32 +45,58 @@ export const UpdatePositionIndustryDialog: React.FC<UpdatePositionIndustryDialog
   };
   const update = async () => {
     if (industry) {
-      const updatePositionIndustry: UpdatePositionIndustry = {
-        industryId: industry?.industryId,
-        positionId: positionId,
-      };
+      setLoading(true);
+      try {
+        const updatePositionIndustry: UpdatePositionIndustry = {
+          industryId: industry?.industryId,
+          positionId: positionId,
+        };
 
-      const formData = new FormData();
-      formData.append("updatePositionIndustryData", JSON.stringify(updatePositionIndustry));
-      const response = await fetch("../api/industry", {
-        method: "PATCH",
-        body: formData,
-      });
-      if (response.ok) {
-        window.location.reload();
-      } else {
-        console.error("Failed to update data");
+        const formData = new FormData();
+        formData.append("updatePositionIndustryData", JSON.stringify(updatePositionIndustry));
+        const response = await fetch("/api/industry", {
+          method: "PATCH",
+          body: formData,
+        });
+        if (response.ok) {
+          if (sector) {
+            onUpdateIndustryDetails(sector.sectorName, industry.industryName, sector.id, industry.industryId);
+            setSector(null);
+            setIndustries([]);
+            setIndustry(null);
+          } else {
+            console.error("Error processing update");
+          }
+        } else {
+          console.error("Failed to update data");
+        }
+      } finally {
+        setLoading(false);
       }
     }
   };
 
-  useEffect(() => {
-    const getIndustries = async (sectorId: number) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
+  const getIndustries = async (sectorId: number) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/industries/${sectorId}`);
+      if (response.ok) {
+        const data: {
+          result: Industry[];
+          error: any;
+        } = await response.json();
+        if (!data.error) {
+          setIndustries(data.result);
+        }
+      } else {
+        console.error("Failed to fetch industries:", response.statusText);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      const response = await getIndustriesBySectorId(sectorId, session?.jwt);
-      setIndustries(response.result as Industry[]);
-    };
+  useEffect(() => {
     if (sector && sector.id != null) {
       getIndustries(sector.id);
     } else {
@@ -111,7 +141,7 @@ export const UpdatePositionIndustryDialog: React.FC<UpdatePositionIndustryDialog
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={update} type="submit">
+          <Button onClick={update} type="submit" disabled={!industry || loading}>
             Update
           </Button>
         </DialogActions>

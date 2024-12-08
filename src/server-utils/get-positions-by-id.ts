@@ -1,5 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../app/api/auth/[...nextauth]/route";
+import { Position } from "../lib/models/position.model";
 
 export async function getPositionById(positionId: string) {
   const session = await getServerSession(authOptions);

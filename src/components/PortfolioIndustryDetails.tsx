@@ -1,11 +1,11 @@
 // components/IndustryDetails.tsx
 "use client";
-import React, { useState } from "react";
-import { PortfolioIndustry, PortfolioPosition, PortfolioSector, PortfolioSectors } from "../app/sectors/position.model";
-import { Button, dividerClasses, Grid } from "@mui/material";
-import { usePathname, useRouter } from "next/navigation";
+import React from "react";
+import { PortfolioPosition, PortfolioSectors } from "../app/sectors/position.model";
+import { Grid } from "@mui/material";
+import { usePathname } from "next/navigation";
 import PieChart from "./piechart";
-import { PositionsTable } from "./PositionsTable";
+import { PortfolioPositionsTable } from "./PortfolioPositionsTable";
 // import { PortfolioSectors } from '../types';
 
 interface PortfolioIndustryDetailsProps {
@@ -41,14 +41,13 @@ const PortfolioIndustryDetails: React.FC<PortfolioIndustryDetailsProps> = ({ sec
     }
   }
 
-  // Now you have the industry data, you can use it as needed
   if (positions && positions.length > 0)
     return (
       <div style={{ marginTop: "100px", textAlign: "center" }}>
         <Grid container spacing={3}>
           <Grid item xs={6} sm={6} md={6} lg={6}>
             <h1>{industryName}</h1>
-            <PositionsTable positions={positions}></PositionsTable>
+            <PortfolioPositionsTable positions={positions}></PortfolioPositionsTable>
           </Grid>
           <Grid item xs={6} sm={6} md={6} lg={6}>
             {" "}
@@ -67,7 +66,6 @@ const PortfolioIndustryDetails: React.FC<PortfolioIndustryDetailsProps> = ({ sec
         </Grid>
       </div>
     );
-  // return <div style={{ marginTop: "100px", textAlign: "center" }}>hello</div>;
 };
 
 export default PortfolioIndustryDetails;

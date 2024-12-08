@@ -1,14 +1,14 @@
 import PieChart from "../../components/piechart";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
-import { getPositions } from "../../server-utils/index";
+import { getPositionSectors } from "../../server-utils/index";
 import { Grid } from "@mui/material";
 import { PortfolioIndustry, PortfolioSectors } from "../sectors/position.model";
 import { IndustryTable } from "../../components/IndustryTable";
 
 const Industries = async () => {
   const session = await getServerSession(authOptions);
-  const response = await getPositions(session?.jwt);
+  const response = await getPositionSectors(session?.jwt);
   const pieChartLabels: string[] = [];
   const currentValues: number[] = [];
   const percentOfAccount: number[] = [];

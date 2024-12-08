@@ -1,24 +1,20 @@
 import * as React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Position } from "../lib/models/position.model";
+import { PortfolioPosition } from "../app/sectors/position.model";
 
 const columns: GridColDef[] = [
   { field: "companyName", headerName: "CompanyName", width: 200 },
-  { field: "symbol", headerName: "Symbol", width: 130 },
-  { field: "percentGain", headerName: "% Gain", width: 130 },
+  { field: "percentGain", headerName: "% Gain", width: 70 },
   { field: "currentValue", headerName: "Current Value", width: 130 },
   { field: "quantity", headerName: "Quantity", width: 70 },
   { field: "totalCostBasis", headerName: "Total Cost Basis", width: 130 },
-  { field: "costPerShare", headerName: "Cost Per Share", width: 130 },
-  { field: "sectorName", headerName: "Sector", width: 200 },
-  { field: "industryName", headerName: "Industry", width: 200 },
 ];
 
-interface PositionsTableProps {
-  positions: Position[];
+interface PortfolioPositionsTableProps {
+  positions: PortfolioPosition[];
 }
 
-export const PositionsTable: React.FC<PositionsTableProps> = ({ positions }) => {
+export const PortfolioPositionsTable: React.FC<PortfolioPositionsTableProps> = ({ positions }) => {
   return (
     <div style={{ height: 400, width: "100%" }}>
       <DataGrid

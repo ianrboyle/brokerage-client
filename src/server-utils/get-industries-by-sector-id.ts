@@ -1,6 +1,18 @@
 import { Industry } from "../lib/models/industry.model";
 
-export async function getIndustriesBySectorId(sectorId: number, jwt?: string) {
+export async function getIndustriesBySectorId(
+  sectorId: number,
+  jwt: string
+): Promise<
+  | {
+      result: Industry[];
+      error: null;
+    }
+  | {
+      result: {};
+      error: unknown;
+    }
+> {
   let result = null,
     error = null;
   if (!jwt) {
@@ -17,11 +29,10 @@ export async function getIndustriesBySectorId(sectorId: number, jwt?: string) {
       credentials: "include",
     });
     if (!result.ok) {
-      throw new Error(`Failed to fetch positions: ${result.statusText}`);
+      throw new Error(`Failed to fetch industry: ${result.statusText}`);
     }
 
     const data: Industry[] = await result.json();
-
     return { result: data, error: null };
   } catch (e) {
     error = e;

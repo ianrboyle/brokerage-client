@@ -9,7 +9,6 @@ export async function updatePositionIndustry(
   const updateIndustryDto = {
     industryId: updatePositionIndustryData.industryId,
   };
-  console.log("updateIndustryDto", updateIndustryDto);
   if (!jwt) {
     throw new Error("Session JWT token not found.");
   }

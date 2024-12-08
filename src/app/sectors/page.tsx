@@ -2,7 +2,7 @@ import { PortfolioSector, PortfolioSectors } from "./position.model";
 import PieChart from "../../components/piechart";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
-import { getPositions } from "../../server-utils/index";
+import { getPositionSectors } from "../../server-utils/index";
 import { Grid } from "@mui/material";
 import { SectorsTable } from "../../components/SectorsTable";
 import Spinner from "../../components/progress/Spinner";
@@ -15,7 +15,7 @@ const Sectors = async () => {
   const sectorIds: number[] = [];
   const session = await getServerSession(authOptions);
 
-  const response = await getPositions(session?.jwt);
+  const response = await getPositionSectors(session?.jwt);
 
   const sectors = response.result as PortfolioSectors;
 

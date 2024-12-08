@@ -1,9 +1,9 @@
 TODO:
 
-- implement csv upload
+- issue where current value for positions is wrong in industry view
+  - has something to do with there being tw different SILJ values - or something like that
 - implement state - save position details in state
 - fix log out
 - improve error handling
 - improve layout
 - combine all the tables components into one component
-- figure out why get industries by id does not work with auth - auth turned off in backend for now
