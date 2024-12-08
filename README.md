@@ -1,7 +1,8 @@
 TODO:
 
-- issue where current value for positions is wrong in industry view
-  - has something to do with there being tw different SILJ values - or something like that
+- i think this has been fixed below
+  - issue where current value for positions is wrong in industry view
+    - has something to do with there being tw different SILJ values - or something like that
 - implement state - save position details in state
 - fix log out
 - improve error handling
