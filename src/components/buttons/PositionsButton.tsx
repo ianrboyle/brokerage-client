@@ -8,7 +8,7 @@ const PositionsButton = () => {
   const { data: session } = useSession();
   if (session && session.user)
     return (
-      <div className="flex items-center space-x-4 text-xl" color="text.secondary">
+      <div className="flex items-center space-x-4 text-xl">
         <Typography color="text.secondary">
           <Link href="/sectors">Sector Allocation</Link>
         </Typography>

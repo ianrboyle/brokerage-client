@@ -3,8 +3,12 @@ import { useRef, useState } from "react";
 import Papa from "papaparse";
 import { parseCsvFile } from "../lib/formatCsvPositions";
 import { addMultiplePositions } from "../server-utils/add-multiple-positions";
+import { Button, Typography } from "@mui/material";
 
-export const UploadCsvComponent = () => {
+interface UploadCsvComponentProps {
+  onUploadComplete: () => void;
+}
+export const UploadCsvComponent: React.FC<UploadCsvComponentProps> = ({ onUploadComplete }) => {
   const [uploading, setUploading] = useState(false);
   const inputRef = useRef();
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,13 +18,13 @@ export const UploadCsvComponent = () => {
         header: true,
         complete: async (results: Papa.ParseResult<any>) => {
           const parsedData = parseCsvFile(results.data);
-          // addPositions(parsedData.splice(21, 22));
           const formData = new FormData();
           formData.append("positions", JSON.stringify(parsedData));
           const res = await fetch("/api/position", {
             method: "POST",
             body: formData,
           });
+          onUploadComplete();
         },
       });
     }
@@ -28,14 +32,14 @@ export const UploadCsvComponent = () => {
 
   return (
     <div>
-      <h4 className="page-header mb-4">Upload a CSV</h4>
-      {/* <div className="mb-4">
-        <input ref={inputRef} disabled={uploading} type="file" className="form-control" />
-      </div>
-      <button onClick={handleUploadCSV} disabled={uploading} className="btn btn-primary">
-        {uploading ? "Uploading..." : "Upload"}
-      </button> */}
-      <input type="file" onChange={handleFileUpload} />
+      <Typography color="text.secondary">
+        <label htmlFor="file-upload" style={{ cursor: "pointer" }}>
+          <Button variant="outlined" component="span">
+            Upload Your Portfolio
+          </Button>
+        </label>
+        <input id="file-upload" type="file" style={{ display: "none" }} onChange={handleFileUpload} />
+      </Typography>
     </div>
   );
 };

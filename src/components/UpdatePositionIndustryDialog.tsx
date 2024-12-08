@@ -13,6 +13,7 @@ import { Industry } from "../lib/models/industry.model";
 import IndustrySelectDropdown from "./IndustrySelectDropdown";
 import { useSession } from "next-auth/react";
 import { UpdatePositionIndustry } from "../lib/models/update-position-industry.model";
+import Spinner from "./progress/Spinner";
 
 interface UpdatePositionIndustryDialogProps {
   sectors: Sector[];
@@ -67,6 +68,7 @@ export const UpdatePositionIndustryDialog: React.FC<UpdatePositionIndustryDialog
           } else {
             console.error("Error processing update");
           }
+          handleClose();
         } else {
           console.error("Failed to update data");
         }
@@ -142,7 +144,7 @@ export const UpdatePositionIndustryDialog: React.FC<UpdatePositionIndustryDialog
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={update} type="submit" disabled={!industry || loading}>
-            Update
+            {loading ? <Spinner /> : "Update"}
           </Button>
         </DialogActions>
       </Dialog>

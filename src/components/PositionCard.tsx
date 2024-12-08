@@ -48,10 +48,10 @@ export const PositionCard: React.FC<PositionCardProps> = ({ position, sectors })
               {currentPosition.companyName}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              {"Sector:" + currentPosition.sectorName}
+              Sector: {currentPosition.sectorName}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              {"Industry:" + currentPosition.industryName}
+              Industry: {currentPosition.industryName}
             </Typography>
             <Typography variant="body1">Quantity: {currentPosition.quantity}</Typography>
             <Typography variant="body1">Cost Per Share: ${currentPosition.costPerShare}</Typography>

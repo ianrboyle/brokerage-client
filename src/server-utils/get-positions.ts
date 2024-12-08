@@ -2,22 +2,20 @@ import { getServerSession } from "next-auth";
 
 import { Position } from "../lib/models/position.model";
 import { authOptions } from "../app/api/auth/[...nextauth]/route";
-export async function getPositions() {
-  const session = await getServerSession(authOptions);
+export async function getPositions(jwt: string) {
   let result = null,
     error = null;
 
-  if (!session?.jwt) {
+  if (!jwt) {
     throw new Error("Session JWT token not found.");
   }
 
   try {
-    console.log("Getting positions");
     result = await fetch(`${process.env.POSITIONS_SERVICE_URL!}/positions`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Cookie: `Authentication=${session.jwt}`,
+        Cookie: `Authentication=${jwt}`,
       },
       credentials: "include",
     });
